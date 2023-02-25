@@ -4,9 +4,7 @@ import BaseHandler from "./BaseHandler";
 import HelloHandler from "./HelloHandler";
 
 export default class BotHandler implements BaseHandler {
-	// eslint-disable-next-line class-methods-use-this
-	handle(bot: Telegraf<Context<Update>>): Telegraf<Context<Update>> {
+	handle(bot: Telegraf<Context<Update>>): void {
 		new HelloHandler().handle(bot);
-		return bot;
 	}
 }
