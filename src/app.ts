@@ -8,4 +8,15 @@ require("dotenv").config();
 const bot: Telegraf<Context<Update>> = new Telegraf(process.env.BOT_TOKEN as string);
 bot.start((ctx: Context) => ctx.reply("Welcome"));
 new BotHandler().handle(bot);
-bot.launch();
+
+if ((process.env.ENVIRONMENT || "dev") === "production") {
+	bot.launch({
+		webhook: {
+			hookPath: "/",
+			domain: process.env.BOT_URL || "",
+			port: Number(process.env.BOT_PORT) || 3000,
+		},
+	});
+} else {
+	bot.launch();
+}
