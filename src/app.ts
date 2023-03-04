@@ -1,6 +1,6 @@
 import { Context, Telegraf } from "telegraf";
 import { Update } from "typegram";
-import BotHandler from "./handlers/BotHandler";
+import BotHandler from "./internal/handlers/BotHandler";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("dotenv").config();
