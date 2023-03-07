@@ -1,5 +1,6 @@
 import axios from "axios";
-import PricePrediction from "./TokenMetricsTypes";
+import TokenMetricsResponse from "./TokenMetricsResponse";
+import { PricePrediction, Token } from "./TokenMetricsTypes";
 
 class TokenMetrics {
 	public axios;
@@ -16,10 +17,26 @@ class TokenMetrics {
 		});
 
 		this.axios.interceptors.response.use(
-			(response) => response.data,
-			(error) => {
-				throw new Error(error);
-			}
+			(response) =>
+				new TokenMetricsResponse<typeof response.data.data>(
+					response.config,
+					response.headers,
+					response.statusText,
+					response.status,
+					response.data.data,
+					false,
+					response.data.message
+				),
+			(error) =>
+				new TokenMetricsResponse<null>(
+					error.config,
+					error.headers,
+					error.statusText,
+					error.status,
+					null,
+					true,
+					error.message
+				)
 		);
 	}
 
@@ -31,19 +48,16 @@ class TokenMetrics {
 		return TokenMetrics.instance;
 	}
 
-	public async getPricePrediction(tokenId: number): Promise<PricePrediction> {
-		const response = await this.axios.get(this.buildUrl("/price-prediction"), {
-			params: { tokens: tokenId, limit: 2, date: new Date().toISOString().split("T")[0] },
+	public async pricePrediction(tokenIds: number[]): Promise<TokenMetricsResponse<PricePrediction[]>> {
+		return this.axios.get(this.buildUrl("/price-prediction"), {
+			params: { tokens: tokenIds.join("%2C%20"), limit: 2, date: new Date().toISOString().split("T")[0] },
 		});
-		return response.data[1];
 	}
 
-	public async getTokenId(symbol: string): Promise<number> {
-		const response = await this.axios.get(this.buildUrl("/tokens"), {
-			params: { token_symbols: symbol },
+	public async tokens(symbols: string[]): Promise<TokenMetricsResponse<Token[]>> {
+		return this.axios.get(this.buildUrl("/tokens"), {
+			params: { token_symbols: symbols.join("%2C%20") },
 		});
-
-		return response.data[0].TOKEN_ID;
 	}
 
 	private buildUrl(path: string): string {

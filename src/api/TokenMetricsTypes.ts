@@ -9,4 +9,10 @@ type PricePrediction = {
 	DATE: string;
 };
 
-export default PricePrediction;
+type Token = {
+	TOKEN_ID: number;
+	SYMBOL: string;
+	NAME: string;
+};
+
+export { PricePrediction, Token };

@@ -5,6 +5,6 @@ import PricePredictionController from "../controllers/PricePredictionController"
 
 export default class PricePredictionHandler implements BaseHandler {
 	handle(bot: Telegraf<Context<Update>>): void {
-		bot.command("/price", new PricePredictionController().predictPrice);
+		bot.command("/predict", new PricePredictionController().predictPrice);
 	}
 }
