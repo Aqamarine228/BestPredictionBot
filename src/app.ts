@@ -6,7 +6,6 @@ import BotHandler from "./internal/handlers/BotHandler";
 require("dotenv").config();
 
 const bot: Telegraf<Context<Update>> = new Telegraf(process.env.BOT_TOKEN as string);
-bot.start((ctx: Context) => ctx.reply("Welcome"));
 new BotHandler().handle(bot);
 
 if ((process.env.ENVIRONMENT || "dev") === "production") {

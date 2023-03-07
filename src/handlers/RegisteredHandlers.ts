@@ -1,6 +1,7 @@
 import PricePredictionHandler from "./PricePredictionHandler";
-import HelloHandler from "./HelloHandler";
+import StartHandler from "./StartHandler";
 import BaseHandler from "../internal/handlers/BaseHandler";
+import HelpHandler from "./HelpHandler";
 
-const handlers: BaseHandler[] = [new PricePredictionHandler(), new HelloHandler()];
+const handlers: BaseHandler[] = [new PricePredictionHandler(), new StartHandler(), new HelpHandler()];
 export default handlers;

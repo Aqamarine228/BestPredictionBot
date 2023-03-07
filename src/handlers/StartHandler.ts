@@ -1,11 +1,11 @@
 import { Telegraf, Context } from "telegraf";
 import { Update } from "typegram";
 import BaseHandler from "../internal/handlers/BaseHandler";
-import HelloController from "../controllers/HelloController";
+import StartController from "../controllers/StartController";
 
-export default class HelloHandler implements BaseHandler {
+export default class StartHandler implements BaseHandler {
 	// eslint-disable-next-line class-methods-use-this
 	handle(bot: Telegraf<Context<Update>>): void {
-		bot.command("/hello", new HelloController().hello);
+		bot.start(new StartController().start);
 	}
 }
